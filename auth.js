@@ -22,7 +22,7 @@ function realizarLogin(event) {
     // 2. Tenta conectar
     console.log("2. Enviando requisição para /api/auth/me...");
     
-    fetch("http://localhost:8080/api/auth/me", {
+    fetch("https://backend-sistema-comprass.onrender.com/api/auth/me", {
         method: "GET",
         headers: {
             "Authorization": authHeader
