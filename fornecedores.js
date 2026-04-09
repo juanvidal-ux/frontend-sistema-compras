@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    const API_BASE_URL = "http://localhost:8080/api/suporte";
+    const API_BASE_URL = "https://backend-sistema-comprass.onrender.com/api/suporte";
     const form = document.getElementById("form-fornecedor");
     const tbody = document.getElementById("corpo-tabela-fornecedores");
     const btnExportarExcel = document.getElementById("btn-exportar-excel");
