@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    const API_BASE_URL = "http://localhost:8080";
+    const API_BASE_URL = "https://backend-sistema-comprass.onrender.com";
     const API_ENDPOINT = "/api/suporte/locais-entrega";
 
     const form = document.getElementById("form-local");
