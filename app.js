@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     
     // --- Configurações ---
-    const API_BASE_URL = "http://localhost:8080";
+    const API_BASE_URL = "https://backend-sistema-comprass.onrender.com/api/suporte";
     let itemNum = 1;
 
     // --- LÓGICA DE ENGENHARIA (MANTIDA) ---
