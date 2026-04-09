@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    const API_BASE_URL = "http://localhost:8080";
+    const API_BASE_URL = "https://backend-sistema-comprass.onrender.com";
 
     const formUpload = document.getElementById("form-upload");
     const inputArquivo = document.getElementById("arquivo-excel");
