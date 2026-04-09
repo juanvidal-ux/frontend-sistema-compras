@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Pedido de Compra</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="loader.css">
+</head>
+<body>
+
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+
+    <div class="container">
+        <h1>Novo Pedido de Compra (PCN)</h1>
+
+        <form id="form-pedido">
+            <fieldset>
+                <legend>Cabeçalho</legend>
+                <label for="codigoPcn">Código PCN:</label>
+                <input type="text" id="codigoPcn" placeholder="PCN_25_001" required>
+
+                <label for="responsavel">Responsável:</label>
+                <input type="text" id="responsavel" placeholder="Nome do Responsável pelo Pedido" required>
+
+                <label for="tipoCompra">Tipo de Compra:</label>
+                <select id="tipoCompra" required>
+                    <option value="">Selecione o tipo...</option>
+                    <option value="Consumiveis">Consumíveis</option>
+                    <option value="Equipamentos e Reformas">Equipamentos e Reformas</option>
+                    <option value="Escritorio e Uniformes">Escritório e Uniformes</option>
+                    <option value="Reembolsos">Reembolsos</option>
+                    </select>
+
+                <label for="localEmissao">Local de Emissão:</label>
+                <input type="text" id="localEmissao" value="São Paulo" required>
+
+                <label for="dataEmissao">Data de Emissão:</label>
+                <input type="date" id="dataEmissao" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fornecedor</legend>
+                <label for="fornecedor">Fornecedor:</label>
+                <select id="fornecedor" required>
+                    <option value="">Carregando...</option>
+                </select>
+                
+                <label for="contatoNome">Contato (A/C):</label>
+                <input type="text" id="contatoNome" placeholder="Nome do Contato">
+
+                <label for="contatoEmail">E-mail Contato:</label>
+                <input type="email" id="contatoEmail" placeholder="email@fornecedor.com">
+                
+                <label for="prezado">Prezado(a):</label>
+                <input type="text" id="prezado" placeholder="Prezado(a)">
+            </fieldset>
+
+            <fieldset>
+                <legend>Orçamento</legend>
+                <label for="numOrcamento">Nº Orçamento:</label>
+                <input type="text" id="numOrcamento">
+
+                <label for="dataOrcamento">Data Orçamento:</label>
+                <input type="date" id="dataOrcamento">
+            </fieldset>
+
+            <fieldset>
+                <legend>Itens do Pedido</legend>
+                <table id="tabela-itens">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Descrição</th>
+                            <th>Qtd</th>
+                            <th>Valor Unit.</th>
+                            <th>Área</th>
+                            <th>Valor Total</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-itens">
+                        </tbody>
+                </table>
+                <button type="button" id="btn-add-item">Adicionar Item</button>
+                
+                <h3>Total do Pedido: R$ <span id="total-pedido">0.00</span></h3>
+            </fieldset>
+
+            <fieldset>
+                <legend>Condições e Faturamento</legend>
+                <label for="prazoEntrega">Prazo de Entrega:</label>
+                <input type="text" id="prazoEntrega" placeholder="10 DDL">
+
+                <label for="condicoesPagamento">Cond. Pagamento:</label>
+                <input type="text" id="condicoesPagamento" placeholder="15 DDL">
+
+                <label for="entidadeFaturamento">Faturar em nome de (Recurso):</label>
+                <select id="entidadeFaturamento" required>
+                    <option value="">Carregando...</option>
+                </select>
+
+                <label for="localEntrega">Local de Entrega:</label>
+                <select id="localEntrega" required>
+                    <option value="">Carregando...</option>
+                </select>
+
+                <label for="numeroProjeto">Nº Projeto:</label>
+                <input type="text" id="numeroProjeto" placeholder="XXXXX">
+                
+                <label for="observacoes">Observações (Nota Fiscal):</label>
+                <textarea id="observacoes" rows="3"></textarea>
+            </fieldset>
+
+            <br>
+            <button type="submit">Salvar Pedido</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="menu.js"></script>
+    <script src="loader.js"></script>
+</body>
+</html>

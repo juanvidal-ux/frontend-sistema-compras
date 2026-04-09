@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Fornecedores</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="mascaras.js"></script>
+</head>
+<body>
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+
+    <div class="container">
+        <h1>Cadastro de Fornecedores</h1>
+
+        <form id="form-fornecedor">
+            <fieldset>
+                <legend>Novo Fornecedor</legend>
+                <label for="nome">Nome (Fantasia):</label>
+                <input type="text" id="nome" required>
+                
+                <label for="cnpj">CNPJ:</label>
+                <input type="text" id="cnpj">
+                
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone">
+                
+                <button type="submit">Salvar Novo</button>
+            </fieldset>
+        </form>
+
+        <fieldset>
+            <legend>Fornecedores Cadastrados</legend>
+            
+            <div class="filter-container">
+                <button type="button" id="btn-exportar-excel" class="btn-filtro-aplicar" style="background-color: #196f3d; margin-bottom: 20px;">
+                    Exportar Lista (Excel)
+                </button>
+            </div>
+
+            <table id="tabela-fornecedores">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome (Fantasia)</th>
+                        <th>CNPJ</th>
+                        <th>Telefone</th>
+                        </tr>
+                </thead>
+                <tbody id="corpo-tabela-fornecedores">
+                    </tbody>
+            </table>
+        </fieldset>
+    </div>
+
+    <script src="fornecedores.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>

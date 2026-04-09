@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Usuários</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <div id="menu-placeholder"></div>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-users-gear"></i> Gestão de Usuários</h1>
+
+        <fieldset>
+            <legend>Cadastrar Novo Usuário</legend>
+            <form id="form-usuario">
+                <div style="display: flex; gap: 15px;">
+                    <div style="flex: 1;">
+                        <label>Login</label>
+                        <input type="text" id="novo-login" placeholder="Ex: maria.gestora" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Senha</label>
+                        <input type="password" id="novo-senha" placeholder="******" required>
+                    </div>
+                    <div style="flex: 1;">
+                        <label>Papel (Permissão)</label>
+                        <select id="novo-papel">
+                            <option value="USER">Usuário Comum (Operador)</option>
+                            <option value="ADMIN">Administrador Total</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fa-solid fa-user-plus"></i> Criar Usuário
+                </button>
+            </form>
+        </fieldset>
+
+        <h3>Usuários Cadastrados</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Login</th>
+                    <th>Papel</th>
+                    <th style="width: 100px; text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="lista-usuarios">
+                </tbody>
+        </table>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="menu.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const token = localStorage.getItem("authToken");
+            const API_URL = "http://localhost:8080/api/auth";
+            const usuarioLogado = localStorage.getItem("usuarioLogado"); // Para não se auto-excluir
+            
+            // 1. Carregar Lista
+            async function carregarUsuarios() {
+                try {
+                    const response = await fetch(`${API_URL}/users`, {
+                        headers: { "Authorization": token }
+                    });
+                    
+                    if (response.status === 403) {
+                        Swal.fire('Acesso Negado', 'Apenas Administradores.', 'error')
+                            .then(() => window.location.href = "pedidos.html");
+                        return;
+                    }
+
+                    const usuarios = await response.json();
+                    const tbody = document.getElementById("lista-usuarios");
+                    tbody.innerHTML = "";
+                    
+                    usuarios.forEach(u => {
+                        const papelBadge = u.papel === 'ADMIN' 
+                            ? '<span style="background:#ef4444; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em;">ADMIN</span>' 
+                            : '<span style="background:#3b82f6; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em;">USER</span>';
+                        
+                        // Impede botão de excluir no próprio usuário
+                        let btnDelete = '';
+                        if (u.login !== usuarioLogado) {
+                            btnDelete = `
+                                <button onclick="excluirUsuario(${u.id}, '${u.login}')" 
+                                        style="background:#dc3545; color:white; border:none; padding:6px 10px; border-radius:4px; cursor:pointer;">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>`;
+                        } else {
+                            btnDelete = `<span style="color:#ccc; font-size:0.8em;">(Você)</span>`;
+                        }
+
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${u.id}</td>
+                                <td><strong>${u.login}</strong></td>
+                                <td>${papelBadge}</td>
+                                <td style="text-align:center;">${btnDelete}</td>
+                            </tr>`;
+                    });
+                } catch (error) { console.error(error); }
+            }
+
+            // 2. Salvar Novo (Agora aceita o papel selecionado)
+            document.getElementById("form-usuario").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const login = document.getElementById("novo-login").value;
+                const senha = document.getElementById("novo-senha").value;
+                const papel = document.getElementById("novo-papel").value;
+
+                try {
+                    const response = await fetch(`${API_URL}/register`, {
+                        method: "POST",
+                        headers: { 
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ login, senha, papel }) // Envia o papel escolhido!
+                    });
+
+                    if (response.ok) {
+                        Swal.fire("Sucesso", "Usuário criado!", "success");
+                        document.getElementById("form-usuario").reset();
+                        carregarUsuarios();
+                    } else {
+                        const erro = await response.text();
+                        Swal.fire("Erro", erro, "error");
+                    }
+                } catch (err) { Swal.fire("Erro", "Erro de conexão", "error"); }
+            });
+
+            // 3. Excluir Usuário (Função Global para o onclick funcionar)
+            window.excluirUsuario = async (id, login) => {
+                const result = await Swal.fire({
+                    title: 'Tem certeza?',
+                    text: `Deseja excluir o usuário "${login}"?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Sim, excluir'
+                });
+
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch(`${API_URL}/${id}`, {
+                            method: 'DELETE',
+                            headers: { "Authorization": token }
+                        });
+
+                        if (response.ok) {
+                            Swal.fire('Excluído!', 'Usuário removido.', 'success');
+                            carregarUsuarios();
+                        } else {
+                            Swal.fire('Erro', 'Não foi possível excluir.', 'error');
+                        }
+                    } catch (e) {
+                        Swal.fire('Erro', 'Erro de conexão.', 'error');
+                    }
+                }
+            };
+
+            carregarUsuarios();
+        });
+    </script>
+</body>
+</html>

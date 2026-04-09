@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Trilha de Auditoria</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu-placeholder"></div>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-eye"></i> Trilha de Auditoria</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Data/Hora</th>
+                    <th>Usuário</th>
+                    <th>Ação</th>
+                    <th>Detalhes</th>
+                </tr>
+            </thead>
+            <tbody id="tabela-logs"></tbody>
+        </table>
+    </div>
+
+    <script src="menu.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const token = localStorage.getItem("authToken");
+            const tbody = document.getElementById("tabela-logs");
+
+            try {
+                const response = await fetch("http://localhost:8080/api/auditoria", {
+                    headers: { "Authorization": token }
+                });
+                
+                if(response.status === 403) {
+                    alert("Acesso restrito."); window.location.href = "pedidos.html"; return;
+                }
+
+                const logs = await response.json();
+                
+                logs.forEach(log => {
+                    // Formata data
+                    const data = new Date(log.dataHora).toLocaleString('pt-BR');
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td style="font-size:0.85em; color:#666;">${data}</td>
+                            <td><strong>${log.usuario}</strong></td>
+                            <td><span style="background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:0.8em;">${log.acao}</span></td>
+                            <td>${log.detalhe}</td>
+                        </tr>
+                    `;
+                });
+            } catch (e) { console.error(e); }
+        });
+    </script>
+</body>
+</html>

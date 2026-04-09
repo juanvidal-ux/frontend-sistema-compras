@@ -1,0 +1,38 @@
+<nav class="navbar">
+    <ul>
+        <li><a href="index.html">Novo Pedido</a></li>
+        <li><a href="pedidos.html">Ver Pedidos</a></li>
+        
+        <li id="menu-resumo"><a href="resumo.html">Resumo Financeiro</a></li>
+        <li id="menu-abc"><a href="abc.html" style="color: #f0a500;">Curva ABC</a></li>
+        <li id="menu-detalhado"><a href="financeiro.html">Relatório Detalhado</a></li>
+        
+        <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Cadastros</a>
+            <div class="dropdown-content">
+                <a href="fornecedores.html">Fornecedores</a>
+                <a href="entidades.html">Entidades</a>
+                <a href="locais.html">Locais de Entrega</a>
+            </div>
+        </li>
+        
+        <li id="menu-migracao"><a href="migracao.html" style="color: #dc3545;">Migrar Dados</a></li>
+        
+        <li id="menu-usuarios" style="display: none;">
+            <a href="usuarios.html" style="color: #8b5cf6;">
+                <i class="fa-solid fa-users"></i> Usuários
+            </a>
+        </li>
+
+        <li id="menu-auditoria" style="display: none;">
+            <a href="auditoria.html" style="color: #0d9488;"> <i class="fa-solid fa-eye"></i> Auditoria
+            </a>
+        </li>
+
+        <li style="margin-left: auto;">
+            <a href="#" onclick="sair()" style="color: #ef4444; border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; padding: 8px 15px;">
+                <i class="fa-solid fa-power-off"></i> Sair
+            </a>
+        </li>
+    </ul>
+</nav>

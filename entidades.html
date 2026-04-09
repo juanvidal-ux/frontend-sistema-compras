@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Entidades</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="mascaras.js"></script>
+</head>
+<body>
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+
+    <div class="container">
+        <h1>Cadastro de Entidades (Faturamento)</h1>
+
+        <form id="form-entidade">
+            <fieldset>
+                <legend>Nova Entidade</legend>
+                <label for="nomeFantasia">Nome Fantasia (Ex: FUSP, USP):</label>
+                <input type="text" id="nomeFantasia" required>
+                
+                <label for="razaoSocial">Razão Social:</label>
+                <input type="text" id="razaoSocial" required>
+                
+                <label for="cnpj">CNPJ:</label>
+                <input type="text" id="cnpj" required>
+                
+                <label for="inscricaoEstadual">Inscrição Estadual:</label>
+                <input type="text" id="inscricaoEstadual">
+                
+                <label for="numeroCr">Número CR:</label>
+                <input type="text" id="numeroCr">
+                
+                <label for="enderecoCompleto">Endereço Completo:</label>
+                <textarea id="enderecoCompleto" rows="3"></textarea>
+                
+                <button type="submit">Salvar Nova</button>
+            </fieldset>
+        </form>
+
+        <fieldset>
+            <legend>Entidades Cadastradas</legend>
+            
+            <div class="filter-container">
+                <button type="button" id="btn-exportar-excel-entidade" class="btn-filtro-aplicar" style="background-color: #196f3d; margin-bottom: 20px;">
+                    Exportar Lista (Excel)
+                </button>
+            </div>
+
+            <table id="tabela-entidades">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome Fantasia</th>
+                        <th>Razão Social</th>
+                        <th>CNPJ</th>
+                        </tr>
+                </thead>
+                <tbody id="corpo-tabela-entidades">
+                    </tbody>
+            </table>
+        </fieldset>
+    </div>
+
+    <script src="entidades.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migração de Dados Históricos</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+
+    <div class="container">
+        <h1>Migração de Histórico (Upload)</h1>
+        
+        <fieldset>
+            <legend>Carregar Planilha de Migração</legend>
+            
+            <form id="form-upload">
+                <label for="arquivo-excel">Ficheiro Excel (.xlsx):</label>
+                <input type="file" id="arquivo-excel" accept=".xlsx" required 
+                       style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; background: #fff; width: 95%;">
+                
+                <br><br>
+                
+                <button type="button" id="btn-validar-migracao" class="btn-filtro-aplicar">1. Validar Planilha (Dry Run)</button>
+                <button type="submit" id="btn-executar-migracao" class="btn-filtro-limpar" disabled 
+                        style="background-color: #28a745; margin-left: 10px;">
+                    2. Executar Migração (Gravar)
+                </button>
+            </form>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Zona de Perigo (Rollback)</legend>
+            <p>Se a última migração correu mal (ex: valores errados), este botão irá apagar <strong>TODOS</strong> os pedidos e itens marcados como "Migração".</p>
+            <button type="button" id="btn-excluir-migrados" style="background-color: #dc3545; width: 100%;">
+                Excluir TODOS os Dados Migrados
+            </button>
+        </fieldset>
+        
+        <fieldset id="log-container" style="display:none;">
+            <legend>Progresso da Migração</legend>
+            <div id="log-output">
+                Aguardando ficheiro...<br>
+            </div>
+        </fieldset>
+
+    </div>
+
+    <script src="migracao.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>

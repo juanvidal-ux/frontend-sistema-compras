@@ -1,0 +1,45 @@
+/* Fundo escuro transparente */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7); /* Fundo branco meio transparente */
+    backdrop-filter: blur(2px); /* Desfoque suave no fundo */
+    z-index: 9999; /* Fica em cima de tudo */
+    display: none; /* Escondido por padrão */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.3s;
+}
+
+/* A animação de giro (Spinner) */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #e2e8f0; /* Cinza claro */
+    border-top: 5px solid #3b82f6; /* Azul do sistema */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+.loading-text {
+    color: #334155;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}

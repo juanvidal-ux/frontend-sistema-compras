@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>...</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+
+    <div class="container">
+        <h1>Cadastro de Locais de Entrega</h1>
+        
+        <form id="form-local">
+            <fieldset>
+                <legend>Novo Local de Entrega</legend>
+                
+                <label for="laboratorio">Nome do Local / Laboratório:</label>
+                <input type="text" id="laboratorio" placeholder="Ex: Laboratório de Caracterização Tecnológica - LCT" required>
+
+                <label for="departamento">Departamento:</label>
+                <input type="text" id="departamento" placeholder="Ex: Depto. de Engenharia de Minas">
+                
+                <label for="endereco">Endereço Completo:</label>
+                <textarea id="endereco" rows="3" required></textarea>
+
+                <label for="contatoResponsavel">Contato Responsável (A/C):</label>
+                <input type="text" id="contatoResponsavel" placeholder="Ex: Profª. Drª. Carina Ulsen">
+
+                <label for="contatoCargo">Cargo do Responsável:</label>
+                <input type="text" id="contatoCargo" placeholder="Ex: Coordenadora do LCT">
+                
+                <label for="headerInstituicao">Instituição (Cabeçalho):</label>
+                <input type="text" id="headerInstituicao" placeholder="Ex: Escola Politécnica da USP">
+
+                <label for="headerContato">Contato (Cabeçalho):</label>
+                <input type="text" id="headerContato" placeholder="Ex: Tel: 11 3091-5151...">
+            </fieldset>
+            
+            <button type="submit">Salvar Local</button>
+        </form>
+
+        <h2 style="margin-top: 30px; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px;">Locais Cadastrados</h2>
+        
+        <table id="tabela-cadastros">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Laboratório</th>
+                    <th>Departamento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela-cadastros">
+                <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="locais.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>

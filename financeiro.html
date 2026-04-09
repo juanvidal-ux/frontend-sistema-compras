@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+
+    <div class="container">
+        <h1>Controle Financeiro</h1>
+
+        <fieldset class="filter-container">
+            <legend>Filtros de Análise</legend>
+            
+            <div class="filtro-item">
+                <label for="filtro-data-inicio">Data Início:</label>
+                <input type="date" id="filtro-data-inicio">
+            </div>
+
+            <div class="filtro-item">
+                <label for="filtro-data-fim">Data Fim:</label>
+                <input type="date" id="filtro-data-fim">
+            </div>
+
+            <div class="filtro-item">
+                <label for="filtro-area">Filtrar por Área / Subcategoria:</label>
+                <select id="filtro-area">
+                    <option value="">Todas</option>
+                </select>
+            </div>
+            
+            <button type="button" id="filtro-aplicar" class="btn-filtro-aplicar">Aplicar Filtros</button>
+            <button type="button" id="filtro-limpar" class="btn-filtro-limpar">Limpar Filtros</button>
+        </fieldset>
+        
+        <nav class="tabs">
+            <button class="tab-link active" data-tab="Consumiveis">Consumíveis PCN</button>
+            <button class="tab-link" data-tab="Equipamentos e Reformas">Equipamentos e Reformas</button>
+            <button class="tab-link" data-tab="Escritorio e Uniformes">Escritório e Uniformes</button>
+            <button class="tab-link" data-tab="Reembolsos">Reembolsos</button>
+        </nav>
+
+        <fieldset class="dashboard-container">
+            <legend>Análise de Gastos (Total por Área)</legend>
+            <div style="position: relative; height: 400px; width: 100%;">
+            <canvas id="grafico-areas"></canvas>
+            </div>
+            
+            <h3 class="total-container">
+                Valor Total (Filtrado): R$ <span id="total-filtrado">0.00</span>
+            </h3>
+        </fieldset>
+        
+        <h2 class="table-title">Relatório Detalhado de Itens</h2>
+        <table id="financeiro-tabela">
+            <thead>
+                <tr>
+                    <th>PCN</th>
+                    <th>Data Compra</th>
+                    <th>Item</th>
+                    <th>Qtd</th>
+                    <th>Área / Subcategoria</th>
+                    <th>Recurso (Faturado em)</th>
+                    <th>Fornecedor</th>
+                    <th>Valor</th>
+                    <th>Responsável</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela-financeiro">
+                <tr><td colspan="9">A carregar dados...</td></tr>
+            </tbody>
+        </table>
+          <!-- PAGINAÇÃO -->
+        <div id="paginacao" style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; align-items: center;">
+            <!-- O JavaScript vai colocar os botões aqui -->
+        </div>
+        
+    </div>
+    <script src="financeiro.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>

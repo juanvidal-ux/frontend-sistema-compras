@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Financeiro (BI)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+
+    <div class="container">
+        <h1>Resumo Financeiro (Dashboard)</h1>
+
+        <fieldset class="dashboard-container">
+            <legend>Comparativo de Gastos Anuais (Últimos 3 anos)</legend>
+            <div class="chart-wrapper">
+                <canvas id="grafico-anual"></canvas>
+            </div>
+        </fieldset>
+
+        <fieldset class="dashboard-container">
+            
+            <legend style="display: flex; justify-content: space-between; align-items: center;">
+                Análise Dinâmica por Setor/Grupo
+                <button type="button" id="btn-debug-nao-classificados" 
+                        class="btn-filtro-limpar" 
+                        style="font-size: 0.7em; padding: 5px 8px; background-color: #856404;">
+                    Ver "Não Classificados"
+                </button>
+            </legend>
+            
+            <div class="filter-container" style="padding-bottom: 20px; background: #fff; border-radius: 8px;">
+                <div class="filtro-item" style="min-width: 250px;">
+                    <label for="filtro-agrupamento">Agrupar Período por:</label>
+                    <select id="filtro-agrupamento">
+                        <option value="trimestral">Trimestral (Ex: Jan-Mar)</option>
+                        <option value="mensal">Mensal (Ex: Jan, Fev, Mar)</option>
+                        <option value="bimestral">Bimestral (Ex: Jan-Fev)</option>
+                        <option value="semestral">Semestral (Ex: Semestre 1)</option>
+                    </select>
+                </div>
+                
+                <button type="button" id="filtro-recalcular" class="btn-filtro-aplicar">Atualizar Tabela</button>
+                <button type="button" id="btn-exportar-excel" class"btn-filtro-limpar" style="background-color: #196f3d;">Exportar Excel</button>
+            </div>
+
+            <table id="tabela-mestre">
+                <thead id="cabecalho-tabela-mestre">
+                </thead>
+                <tbody id="corpo-tabela-mestre">
+                    </tbody>
+            </table>
+        </fieldset>
+    </div>
+
+    <script src="resumo.js"></script>
+    <script src="menu.js"></script>
+</body>
+</html>

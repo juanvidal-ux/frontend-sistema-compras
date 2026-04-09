@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Curva ABC</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="menu-placeholder"></div>
+    <script src="auth.js"></script> <script src="menu.js"></script>
+    <div class="container">
+        <h1>Análise Curva ABC (Pareto 80/20)</h1>
+
+        <div class="filtros-container" style="display: flex; gap: 15px; align-items: flex-end; background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            
+            <div class="filtro-box" style="flex-grow: 1;">
+                <label for="filtro-area-abc" style="font-weight: bold; display: block; margin-bottom: 5px;">Selecione a Área:</label>
+                <select id="filtro-area-abc" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Selecione...</option>
+                    <option value="Admin geral">Admin Geral</option>
+                    <option value="Quimica">Química</option>
+                    <option value="Partículas">Partículas</option>
+                    <option value="Microscopia">Microscopia</option>
+                    <option value="DRX">DRX</option>
+                    <option value="Projetos">Projetos</option>
+                    <option value="Manutenção Geral">Manutenção Geral</option>
+                </select>
+            </div>
+
+            <div class="filtro-box" style="width: 120px;">
+                <label for="filtro-ano" style="font-weight: bold; display: block; margin-bottom: 5px;">Ano:</label>
+                <select id="filtro-ano" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="todos">Todos</option>
+                </select>
+            </div>
+
+            <button id="btn-analisar-abc" class="btn-primary" style="height: 38px; padding: 0 20px; font-weight: bold; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 4px;">
+                Analisar
+            </button>
+            <div id="export-buttons" style="display: none; margin-left: 10px; gap: 10px;">
+            <button id="btn-excel" style="height: 38px; background: #217346; color: white; border: none; border-radius: 4px; cursor: pointer; padding: 0 15px;" title="Baixar Excel">
+            📊 Excel
+            </button>
+            <button id="btn-pdf" style="height: 38px; background: #b30b00; color: white; border: none; border-radius: 4px; cursor: pointer; padding: 0 15px;" title="Baixar PDF">
+            📄 PDF
+            </button>
+        </div>
+        </div>
+
+        <div id="chart-container-abc" style="display: none; background: white; padding: 15px; border-radius: 8px; margin-top: 20px; height: 400px;">
+            <canvas id="grafico-pareto"></canvas>
+        </div>
+
+        <div id="table-container-abc" style="display: none; margin-top: 20px;">
+            <table id="tabela-abc" style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #343a40; color: white;">
+                        <th style="padding: 10px;">Item / Descrição</th>
+                        <th style="padding: 10px;">Setor Origem</th>
+                        <th style="padding: 10px;">Valor Total</th>
+                        <th style="padding: 10px;">%</th>
+                        <th style="padding: 10px;">% Acum.</th>
+                        <th style="padding: 10px;">Classe</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela-abc"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="menu.js"></script>
+    <script src="abc.js"></script>
+</body>
+</html>

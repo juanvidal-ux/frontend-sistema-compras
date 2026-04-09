@@ -1,0 +1,514 @@
+/* =========================================
+   1. SETUP & ANIMAÇÕES
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-app: #f3f4f6;
+    --surface: #ffffff;
+    --primary: #0f172a;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    
+    /* Cores de Destaque (Gradients) */
+    --brand-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --danger-gradient: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    --success-gradient: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    
+    /* Efeitos */
+    --glass: rgba(255, 255, 255, 0.85);
+    --blur: blur(12px);
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+    --shadow-float: 0 20px 40px -5px rgba(0,0,0,0.1);
+    --shadow-glow: 0 0 15px rgba(37, 99, 235, 0.2);
+    --radius: 12px;
+}
+
+/* Animação de fundo sutil */
+@keyframes gradient-bg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-app);
+    /* Grid tecnológico sutil no fundo */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(239, 68, 68, 0.05) 0px, transparent 50%),
+        linear-gradient(#e5e7eb 1px, transparent 1px),
+        linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    background-position: 0 0, 0 0, -1px -1px, -1px -1px;
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================
+   2. MENU FLUTUANTE (CORRIGIDO)
+   ========================================= */
+#menu-placeholder {
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    padding-bottom: 20px;
+}
+
+.navbar {
+    pointer-events: auto;
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+    padding: 8px 15px;
+    display: inline-flex; /* Menu ajusta ao conteúdo */
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* --- CORREÇÃO DO BUG DO DROPDOWN --- */
+.navbar li {
+    position: relative; /* ISSO SEGURA O DROPDOWN NO LUGAR CERTO */
+    float: none;
+}
+
+.navbar > ul > li > a, .dropbtn {
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Hover no menu com efeito de luz */
+.navbar > ul > li > a:hover, .dropbtn:hover {
+    background: #fff;
+    color: #2563eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+}
+
+/* Dropdown Corrigido e Bonito */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #fff;
+    min-width: 200px;
+    top: 120%; /* Um pouco abaixo do botão */
+    left: 0;   /* Alinha com o início do botão */
+    box-shadow: 0 15px 35px -5px rgba(0,0,0,0.15);
+    border-radius: 12px;
+    padding: 8px;
+    border: 1px solid #f1f5f9;
+    z-index: 100;
+    animation: slideUp 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Triângulo apontando para cima (detalhe visual) */
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 20px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-content a {
+    padding: 10px 15px;
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: block;
+    text-decoration: none;
+    transition: 0.2s;
+}
+.dropdown-content a:hover {
+    background: #f8fafc;
+    color: #2563eb;
+    padding-left: 20px; /* Efeito de deslize */
+}
+.dropdown:hover .dropdown-content { display: block; }
+
+/* =========================================
+   3. CONTEÚDO PRINCIPAL (CARD ELEVADO)
+   ========================================= */
+.container {
+    max-width: 1150px;
+    margin: 0 auto 50px auto;
+    padding: 40px;
+    background: var(--surface);
+    border-radius: 20px;
+    box-shadow: var(--shadow-float);
+    border: 1px solid #fff;
+    position: relative;
+}
+
+.container h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f1f5f9;
+    letter-spacing: -0.5px;
+}
+
+/* =========================================
+   4. INPUTS & FILTROS (Clean)
+   ========================================= */
+fieldset {
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+legend {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #2563eb;
+    background: #e0f2fe;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #fff;
+    color: var(--text-main);
+    transition: all 0.2s;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+input:focus, select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    outline: none;
+}
+
+/* Área de filtros */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #f1f5f9;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+.filtro-item { flex: 1; min-width: 180px; }
+
+/* =========================================
+   5. BOTÕES (GRADIENTES PODEROSOS)
+   ========================================= */
+button, .btn {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+}
+
+/* Variantes */
+.btn-primary, button[type="submit"], #btn-add-item, .btn-filtro-aplicar, #btn-analisar-abc {
+    background: var(--brand-gradient);
+}
+
+#btn-excel { background: var(--success-gradient); }
+#btn-pdf { background: var(--danger-gradient); }
+
+.btn-filtro-limpar {
+    background: #fff;
+    color: var(--text-muted);
+    border: 1px solid #e2e8f0;
+    box-shadow: none;
+}
+.btn-filtro-limpar:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: var(--text-main);
+}
+
+/* =========================================
+   6. TABELAS (MODERNAS)
+   ========================================= */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f1f5f9;
+}
+
+th {
+    background: #f8fafc;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+td {
+    padding: 15px 20px;
+    background: #fff;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    vertical-align: middle;
+}
+
+tbody tr:hover td {
+    background: #feffff; /* Super sutil */
+}
+
+/* Badge para Tipo */
+td span {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid #e2e8f0;
+}
+
+/* Ícones de Ação */
+td a {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    transition: all 0.2s;
+    margin-right: 8px;
+    font-size: 0.85rem;
+}
+/* Editar (Amarelo) */
+td a[href*="editar"] { background: #fbbf24; color: #78350f; }
+/* Documento (Azul) */
+td a[href*="documento"] { background: #0c4baa; }
+/* Excluir (Vermelho) */
+td a.btn-excluir { background: #ef4444; }
+
+td a:hover { transform: scale(1.1); filter: brightness(1.05); }
+
+/* =========================================
+   7. TOTAIS & LOGS
+   ========================================= */
+#total-pedido, .total-container {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #059669;
+    text-align: right;
+    margin-top: 20px;
+}
+
+#log-output {
+    font-family: 'Fira Code', monospace;
+    background: #1e293b;
+    color: #34d399;
+    padding: 20px;
+    border-radius: 12px;
+}
+/* =========================================
+   CORREÇÃO DAS ABAS (Estilo Segmented Control)
+   ========================================= */
+
+.tabs {
+    display: inline-flex;       /* Ajusta ao tamanho do conteúdo */
+    background: #e2e8f0;        /* Fundo cinza mais forte para criar contraste */
+    padding: 6px;               /* Espaço interno */
+    border-radius: 16px;        /* Arredondado */
+    gap: 0;                     /* Sem espaço entre os botões (o padding resolve) */
+    margin-bottom: 30px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); /* Sombra interna (profundidade) */
+    flex-wrap: wrap;            /* Se a tela for pequena, quebra linha */
+}
+
+.tab-link {
+    border: none;
+    background: transparent;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    
+    /* CORREÇÃO DE LEITURA AQUI: */
+    color: #64748b;             /* Cinza escuro (legível) */
+    
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;        /* Não quebra o texto do botão */
+}
+
+.tab-link:hover {
+    color: #1e293b;             /* Quase preto ao passar o mouse */
+    background: rgba(255, 255, 255, 0.5); /* Leve clareada */
+}
+
+/* O Botão Ativo (Selecionado) */
+.tab-link.active {
+    background: #ffffff;        /* Fundo Branco puro */
+    color: #2563eb;             /* Azul Vibrante */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Sombra flutuante */
+    transform: scale(1.02);     /* Aumenta levemente */
+}
+/* =========================================
+   8. ANIMAÇÕES DE ENTRADA (O toque final)
+   ========================================= */
+
+/* Faz o container aparecer deslizando de baixo para cima */
+.container {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Faz o menu cair do topo suavemente */
+#menu-placeholder {
+    animation: slideDown 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); /* Começa 30px para baixo */
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);    /* Termina no lugar certo */
+    }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+/* Adicione este seletor .btn-word */
+td a.btn-word { 
+    background-color: #0ea5e9; /* Azul Celeste Bonito */
+    color: white;
+    border: 1px solid #0ea5e9;
+}
+
+/* Efeito Hover */
+td a.btn-word:hover { 
+    background-color: #0284c7; 
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+    transform: scale(2.0);
+}
+.btn-secondary:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+/* --- Botões de Ação e Paginação --- */
+.btn-success {
+    background-color: #10b981; /* Verde Esmeralda */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.btn-success:hover { background-color: #059669; }
+
+.btn-secondary {
+    background-color: #334155; /* Azul Acinzentado */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.btn-secondary:hover { background-color: #475569; }
+
+.btn-secondary:disabled {
+    background-color: #cbd5e1; /* Cinza Claro */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --- Tabela --- */
+.table-pedidos th {
+    background-color: #1e293b; /* Cabeçalho Escuro */
+    color: white;
+    font-weight: 600;
+    text-align: left;
+}
+.table-pedidos tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+.table-pedidos tr:hover {
+    background-color: #f1f5f9;
+}
