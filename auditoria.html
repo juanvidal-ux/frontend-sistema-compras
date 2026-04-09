@@ -32,7 +32,7 @@
             const tbody = document.getElementById("tabela-logs");
 
             try {
-                const response = await fetch("http://localhost:8080/api/auditoria", {
+                const response = await fetch("https://backend-sistema-comprass.onrender.com/api/auditoria", {
                     headers: { "Authorization": token }
                 });
                 
