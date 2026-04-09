@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    const API_BASE_URL = "http://localhost:8080/api/pedidos";
+    const API_BASE_URL = "https://backend-sistema-comprass.onrender.com/api/pedidos";
     const tbody = document.getElementById("corpo-tabela-pedidos");
     const inputBusca = document.getElementById("input-busca");
     const btnExportar = document.getElementById("btn-exportar-geral");
