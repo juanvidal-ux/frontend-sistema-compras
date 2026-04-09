@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     
     // Configurações Globais
-    const API_BASE_URL = "http://localhost:8080";
+    const API_BASE_URL = "https://backend-sistema-comprass.onrender.com";
     const tbody = document.getElementById("corpo-tabela-financeiro");
     const spanTotalFiltrado = document.getElementById("total-filtrado");
     const tabsContainer = document.querySelector(".tabs");
