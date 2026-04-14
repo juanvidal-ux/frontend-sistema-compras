@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? new Date(pedido.dataEmissao).toLocaleDateString("pt-BR")
                 : "-";
 
-            const fornecedorNome = pedido.fornecedor?.nome || "N/A";
+            const fornecedorNome = pedido.fornecedorNome || 'N/A';
             const responsavel = pedido.responsavel || "N/A";
             const tipoCompra = pedido.tipoCompra || "N/A";
             const valorFormatado = pedido.totalPedido
