@@ -1,16 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // =========================
-    // CONFIGURAÇÕES DA API
-    // =========================
     const API_BASE_URL = "https://backend-sistema-comprass.onrender.com";
     const API_SUPORTE_URL = `${API_BASE_URL}/api/suporte`;
     const API_PEDIDOS_URL = `${API_BASE_URL}/api/pedidos`;
 
     let itemNum = 1;
 
-    // =========================
-    // LÓGICA DE ENGENHARIA
-    // =========================
     const areasPorTipo = {
         "Consumiveis": [
             "Projetos",
@@ -51,9 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ]
     };
 
-    // =========================
-    // REFERÊNCIAS DO FORMULÁRIO
-    // =========================
     const form = document.getElementById("form-pedido");
     const selectTipoCompra = document.getElementById("tipoCompra");
     const selectFornecedor = document.getElementById("fornecedor");
@@ -63,18 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const corpoTabelaItens = document.getElementById("corpo-tabela-itens");
     const spanTotalPedido = document.getElementById("total-pedido");
 
-    // =========================
-    // VERIFICAÇÃO DE LOGIN
-    // =========================
     const token = localStorage.getItem("authToken");
     if (!token) {
         window.location.href = "login.html";
         return;
     }
 
-    // =========================
-    // FUNÇÕES AUXILIARES
-    // =========================
     function criarSelectArea(selectedArea = "") {
         const tipoCompraSelecionado = selectTipoCompra.value;
         const areas = areasPorTipo[tipoCompraSelecionado] || [];
@@ -189,9 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
         adicionarLinhaItem();
     }
 
-    // =========================
-    // EVENTOS
-    // =========================
     if (btnAddItem) {
         btnAddItem.addEventListener("click", adicionarLinhaItem);
     }
@@ -319,9 +301,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // =========================
-    // CARGA INICIAL
-    // =========================
     carregarSelect("/fornecedores", selectFornecedor, "nome");
     carregarSelect("/entidades", selectEntidade, "nomeFantasia");
     carregarSelect("/locais-entrega", selectLocal, "laboratorio");
