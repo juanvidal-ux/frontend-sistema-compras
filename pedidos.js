@@ -25,11 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
         try {
-            const response = await fetch(url, {
+            return await fetch(url, {
                 ...options,
                 signal: controller.signal
             });
-            return response;
         } finally {
             clearTimeout(timeoutId);
         }
@@ -47,18 +46,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            console.log("Buscando pedidos em:", API_BASE_URL);
-
             const response = await fetchComTimeout(API_BASE_URL, {
                 headers: {
                     "Authorization": token
                 }
             }, 15000);
 
-            console.log("Status da resposta /api/pedidos:", response.status);
-
             if (response.status === 401) {
                 alert("Sessão expirada.");
+                localStorage.removeItem("authToken");
+                localStorage.removeItem("usuarioLogado");
+                localStorage.removeItem("usuarioPapel");
                 window.location.href = "login.html";
                 return;
             }
@@ -69,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const dados = await response.json();
-            console.log("Pedidos recebidos:", dados);
 
             listaCompletaPedidos = Array.isArray(dados)
                 ? dados.sort((a, b) => (b.id || 0) - (a.id || 0))
@@ -82,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Erro ao carregar pedidos:", error);
 
             let mensagem = "Erro ao carregar pedidos.";
-
             if (error.name === "AbortError") {
                 mensagem = "A requisição demorou demais e foi cancelada. Verifique o backend.";
             }
@@ -136,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? new Date(pedido.dataEmissao).toLocaleDateString("pt-BR")
                 : "-";
 
-            const fornecedorNome = pedido.fornecedorNome || 'N/A';
+            const fornecedorNome = pedido.fornecedorNome || "N/A";
             const responsavel = pedido.responsavel || "N/A";
             const tipoCompra = pedido.tipoCompra || "N/A";
             const valorFormatado = pedido.totalPedido
@@ -178,14 +174,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             listaFiltrada = listaCompletaPedidos.filter(pedido => {
                 const pcn = pedido.codigoPcn?.toLowerCase() || "";
-                const fornecedor = pedido.fornecedor?.nome?.toLowerCase() || "";
+                const fornecedor = pedido.fornecedorNome?.toLowerCase() || "";
                 const resp = pedido.responsavel?.toLowerCase() || "";
+                const tipoCompra = pedido.tipoCompra?.toLowerCase() || "";
 
-                const temItem = Array.isArray(pedido.itens) && pedido.itens.some(item =>
-                    item.descricao?.toLowerCase().includes(termo)
+                return (
+                    pcn.includes(termo) ||
+                    fornecedor.includes(termo) ||
+                    resp.includes(termo) ||
+                    tipoCompra.includes(termo)
                 );
-
-                return pcn.includes(termo) || fornecedor.includes(termo) || resp.includes(termo) || temItem;
             });
 
             renderizarPagina(1);
@@ -230,6 +228,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: { "Authorization": token }
             }, 15000);
 
+            if (response.status === 401) {
+                alert("Sessão expirada.");
+                window.location.href = "login.html";
+                return;
+            }
+
             if (!response.ok) {
                 throw new Error(`Falha ao excluir. Status ${response.status}`);
             }
@@ -259,6 +263,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetchComTimeout(`${API_BASE_URL}/documento/${id}`, {
                 headers: { "Authorization": token }
             }, 20000);
+
+            if (response.status === 401) {
+                alert("Sessão expirada.");
+                window.location.href = "login.html";
+                return;
+            }
 
             if (!response.ok) {
                 throw new Error(`Falha ao gerar o documento. Status ${response.status}`);
@@ -292,11 +302,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const dadosExportacao = listaFiltrada.map(p => ({
                 "PCN": p.codigoPcn,
                 "Data Emissão": p.dataEmissao ? new Date(p.dataEmissao).toLocaleDateString("pt-BR") : "",
-                "Tipo Compra": p.tipoCompra,
-                "Fornecedor": p.fornecedor ? p.fornecedor.nome : "",
-                "Entidade": p.entidadeFaturamento ? p.entidadeFaturamento.nomeFantasia : "",
+                "Tipo Compra": p.tipoCompra || "",
+                "Fornecedor": p.fornecedorNome || "",
                 "Valor Total": p.totalPedido,
-                "Responsável": p.responsavel
+                "Responsável": p.responsavel || ""
             }));
 
             const ws = XLSX.utils.json_to_sheet(dadosExportacao);
